@@ -1,6 +1,20 @@
 class TextNode():
     '''
     Intermediate representation of text (markdown->textnode->htmlnode)
+    We're going to need a way to represent all the different types of inline text. 
+    We're going to be parsing Markdown text, and outputting it to HTML, so we need an 
+    intermediate representation of the text in our code.
+
+    When I say "inline" I just mean text that is part of a larger block of text. For us, this includes:
+
+    -Normal text
+    -Bold text
+    -Italic text
+    -Code text
+    -Links
+    -Images
+
+    Everything else we're considering block level, like headings, paragraphs, and bullet lists
     '''
     def __init__(self,text: str,text_type: str,url: str = None):
         self.text = text
