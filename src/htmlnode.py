@@ -42,7 +42,7 @@ class LeafNode(HTMLNode):
     For example, a simple <p> tag with some text inside of it:
     '''
     def __init__(self,tag: str = None, value: str = None, props: dict = None):
-        if not value:
+        if value is None:
             raise ValueError("Value is required for all LeafNodes")
         super().__init__(tag=tag, value=value, children=None, props=props)
 
