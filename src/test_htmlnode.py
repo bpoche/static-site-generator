@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode, LeafNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_eq(self):
@@ -71,5 +71,74 @@ class TestLeafNode(unittest.TestCase):
         actual = node.to_html()
         expected = "testing"
         self.assertEqual(expected,actual)
+
+class TestParentNode(unittest.TestCase):
+    def test_eq(self):
+        children = [LeafNode("i","testing")]
+        node1 = ParentNode("b",children)
+        node2 = ParentNode("b",children)
+        self.assertEqual(node1,node2)
+
+    def test_neq(self):
+        children = [LeafNode("i","testing")]
+        node1 = ParentNode("b",children)
+        node2 = ParentNode("i",children)
+        self.assertNotEqual(node1,node2)
+
+    # Parent nodes must have children
+    def test_to_html_no_children(self):
+        with self.assertRaises(ValueError):
+            node = ParentNode("b")
+            node.to_html()
+
+    def test_no_tag(self):
+        children = [LeafNode("i","testing")]
+        node = ParentNode(None,children)
+        with self.assertRaises(ValueError):
+            node.to_html()
+
+    def test_to_html(self):
+        node = ParentNode(
+            "p",
+            [
+                LeafNode("b", "Bold text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+            ],
+        )
+        expected = "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>"
+        actual = node.to_html()
+        self.assertEqual(expected,actual)
+
+    def test_to_html_nested_parent(self):
+        node = ParentNode(
+            "div",
+            [
+                ParentNode(
+                    "p",
+                    [
+                        LeafNode("b", "Bold text"),
+                        LeafNode(None, "Normal text"),
+                        LeafNode("i", "italic text"),
+                        LeafNode(None, "Normal text"),
+                    ],
+                ),
+                ParentNode(
+                    "p",
+                    [
+                        LeafNode("b", "Bold text"),
+                        LeafNode(None, "Normal text"),
+                        LeafNode("i", "italic text"),
+                        LeafNode(None, "Normal text"),
+                    ],
+                ),
+            ],
+        )
+        expected = "<div><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p></div>"
+        actual = node.to_html()
+        self.assertEqual(expected,actual)
+
+    
 
         

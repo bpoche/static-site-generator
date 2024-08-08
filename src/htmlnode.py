@@ -1,6 +1,11 @@
 import functools
 
 class HTMLNode():
+    '''
+    HTMLNode class will represent a "node" in an HTML document tree 
+    (like a <p> tag and its contents, or an <a> tag and its contents) 
+    and is purpose-built to render itself as HTML.
+    '''
     def __init__(self,tag: str = None, value: str = None, children: list = None, props: dict = None):
         self.tag = tag
         self.value = value
@@ -32,6 +37,10 @@ class HTMLNode():
         return html_str
     
 class LeafNode(HTMLNode):
+    '''
+    LeafNode is a type of HTMLNode that represents a single HTML tag with no children. 
+    For example, a simple <p> tag with some text inside of it:
+    '''
     def __init__(self,tag: str = None, value: str = None, props: dict = None):
         if not value:
             raise ValueError("Value is required for all LeafNodes")
@@ -41,3 +50,19 @@ class LeafNode(HTMLNode):
         if not self.tag:
             return self.value
         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+    
+class ParentNode(HTMLNode):
+    '''
+    ParentNode class will handle the nesting of HTML nodes inside of one another. 
+    Any HTML node that's not "leaf" node (i.e. it has children) is a "parent" node.
+    '''
+    def __init__(self,tag: str = None, children: list = None, props: dict = None):
+        super().__init__(tag=tag, children=children, props=props)
+
+    def to_html(self):
+        if not self.tag:
+            raise ValueError("No tag provided for ParentNode")
+        if not self.children:
+            raise ValueError("Children are required for all ParentNodes")
+        html_children =  functools.reduce(lambda acc,item: acc + f"{item.to_html()}",self.children,"")
+        return f"<{self.tag}{self.props_to_html()}>{html_children}</{self.tag}>"
