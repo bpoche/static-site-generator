@@ -7,6 +7,16 @@ class HTMLNode():
         self.children = children.copy() if children else None
         self.props = props.copy() if props else None
 
+    def __eq__(self,HTMLNode):
+        if (
+            self.tag == HTMLNode.tag and
+            self.value == HTMLNode.value and
+            self.children == HTMLNode.children and
+            self.props == HTMLNode.props
+        ):
+            return True
+        return False
+
     def __repr__(self):
         return f"HTMLNode(tag={self.tag}, value={self.value}, children={self.children}, props={self.props})"
 
@@ -17,12 +27,3 @@ class HTMLNode():
         html_str = functools.reduce(lambda acc,item: f'{acc} {item[0]}="{item[1]}"',self.props.items(),"")
         return html_str
     
-def main():
-    props = {
-    "href": "https://www.google.com", 
-    "target": "_blank",
-}
-    htmlnode = HTMLNode("b","testing",None,props=props)
-    print(repr(htmlnode.props_to_html()))
-
-main()
