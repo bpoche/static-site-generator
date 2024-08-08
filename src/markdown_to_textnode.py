@@ -12,27 +12,25 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     old_nodes = old_nodes.copy()
     if text_type in [text_type_bold,text_type_italic,text_type_code]:
-        for node in old_nodes:
-            split_list = node.text.split(delimiter)
-            total_delim = len(split_list) - 1
-            if total_delim == 0:
-                new_nodes.append(node)
+        for old_node in old_nodes:
+            if old_node.text_type != text_type_text:
+                new_nodes.append(old_node)
                 continue
-            cnt = 0
+            split_nodes = []
+            sections = old_node.text.split(delimiter)
+            total_delim = len(sections) - 1
+            if total_delim == 0:
+                new_nodes.append(old_node)
+                continue
             if total_delim % 2 != 0:
-                raise ValueError(f"Invalid markdown format - odd number of delimiter: {delimiter}")
-            for item in split_list:
-                if cnt % 2 == 0:
-                    if item:
-                        new_nodes.append(TextNode(text = item, text_type = text_type_text))
+                raise ValueError("Invalid markdown format, formatted section not closed")
+            for i in range(len(sections)):
+                if i % 2 == 0:
+                    if sections[i]:
+                        split_nodes.append(TextNode(text = sections[i], text_type = text_type_text))
                 else:
-                    if delimiter == '*':
-                        new_nodes.append(TextNode(text = item, text_type = text_type_italic))
-                    elif delimiter == "**":
-                        new_nodes.append(TextNode(text = item, text_type = text_type_bold))
-                    elif delimiter == "`":
-                        new_nodes.append(TextNode(text = item, text_type = text_type_code))
-                cnt+=1
+                    split_nodes.append(TextNode(text = sections[i], text_type = text_type))
+            new_nodes.extend(split_nodes)
     if text_type == text_type_link:
         pass
     if text_type == text_type_image:
