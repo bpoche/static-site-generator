@@ -55,7 +55,6 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
     blocks = markdown_to_blocks(markdown)
     for block in blocks:
         block_type = block_to_block_type(block)
-        print(f'BLOCK TYPE: {block_type}')
         if block_type == 'heading':
             html_children = block_heading_to_html_children(block)
             if html_children:
@@ -162,7 +161,14 @@ def block_p_to_html_children(block):
 # paragraph
 # do you like it?'''
 
-# html_node = markdown_to_html_node(markdown)
-# if html_node:
-#     print(html_node.to_html())
-#     logger.error(html_node.to_html())
+markdown = '''# Tolkien Fan Club
+
+**I like Tolkien**. Read my [first post here](/majesty)
+
+> All that is gold does not glitter
+'''
+
+html_node = markdown_to_html_node(markdown)
+if html_node:
+    print(html_node.to_html())
+    logger.error(html_node.to_html())

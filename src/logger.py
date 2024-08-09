@@ -11,7 +11,7 @@ def setup_logging():
     
     # Construct the path to the log files
     log_file_path = os.path.join(parent_dir, 'static-site-gen-v2.log')
-    current_log_file_path = os.path.join(parent_dir, 'static-site-gen-v2.log')
+    current_log_file_path = os.path.join(parent_dir, 'static-site-gen-v2-current.log')
 
     logging_config = {
         'version': 1,
