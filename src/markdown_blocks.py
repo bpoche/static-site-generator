@@ -158,11 +158,11 @@ def block_p_to_html_children(block):
 # 2. ordered list
 # 3. do you like it?'''
 
-markdown = '''this is a
-paragraph
-do you like it?'''
+# markdown = '''this is a
+# paragraph
+# do you like it?'''
 
-html_node = markdown_to_html_node(markdown)
-if html_node:
-    print(html_node.to_html())
-    logger.error(html_node.to_html())
+# html_node = markdown_to_html_node(markdown)
+# if html_node:
+#     print(html_node.to_html())
+#     logger.error(html_node.to_html())

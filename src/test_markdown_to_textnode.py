@@ -377,3 +377,9 @@ class TestExtractTitle(unittest.TestCase):
         text = "This is not a title"
         with self.assertRaises(ValueError):
             extract_title(text)
+
+    def test_long_markdown(self):
+        text = "# This is a title\n\nThis is some text\n\n* This is a list item\n* This is another list item"
+        expected = "This is a title"
+        actual = extract_title(text)
+        self.assertEqual(expected, actual)
