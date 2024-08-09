@@ -2,7 +2,7 @@
 
 **I like Tolkien**. Read my [first post here](/majesty)
 
-> All that is gold does not glitter
+> All that is gold does not glitter sometimes maybe
 
 ## Reasons I like Tolkien
 
