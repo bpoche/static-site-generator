@@ -38,6 +38,7 @@ def copy_all_contents(src_dir, dest_dir):
 
 # Get the directory where the script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
+logger.info(f"script_dir: {script_dir}")
 
 src_dir = "../static"
 dest_dir = "../public"
@@ -46,11 +47,11 @@ dest_dir = "../public"
 src_dir_abs = os.path.abspath(os.path.join(script_dir, src_dir))
 dest_dir_abs = os.path.abspath(os.path.join(script_dir, dest_dir))
 
-logger.info(f'src_dir: {src_dir}')
-logger.info(f'dest_dir: {dest_dir}')
+logger.info(f'src_dir: {src_dir_abs}')
+logger.info(f'dest_dir: {dest_dir_abs}')
 
 # Uncomment this line if you want to delete contents of dest_dir before copying
-delete_contents_of_directory(dest_dir)
+delete_contents_of_directory(dest_dir_abs)
 
 # Recursively copy all contents from src_dir to dest_dir
 copy_all_contents(src_dir_abs, dest_dir_abs)

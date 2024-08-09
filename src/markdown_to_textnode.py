@@ -88,6 +88,12 @@ def extract_markdown_images(text):
 def extract_markdown_links(text):
     return re.findall(r"(?<!!)\[(.*?)\]\((.*?)\)",text)
 
+def extract_title(markdown):
+    for line in markdown.split("\n"):
+        if line[:2] == "# ":
+            return line[2:].strip()
+    raise ValueError("No h1 header found in markdown")
+
 def text_to_textnodes(text: str) -> list[TextNode]:
     node = TextNode(text=text, text_type='text')
     nodes = split_nodes_delimiter(old_nodes=[node], delimiter="**", text_type='bold')
@@ -96,3 +102,9 @@ def text_to_textnodes(text: str) -> list[TextNode]:
     nodes = split_nodes_image(old_nodes=nodes.copy())
     nodes = split_nodes_link(old_nodes=nodes.copy())
     return nodes
+
+print(extract_title('''
+                    # Tester Title
+                    # 
+# Here I am ''' 
+))

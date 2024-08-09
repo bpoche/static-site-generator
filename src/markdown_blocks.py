@@ -9,6 +9,7 @@ def markdown_to_blocks(markdown: str) -> list[str]:
     for block in markdown.split("\n\n"):
         if block.strip():
             blocks.append(block.strip())
+    logger.debug(f"blocks: {blocks}")
     return blocks
 
 def block_to_block_type(block: str) -> str:
@@ -85,7 +86,7 @@ def block_heading_to_html_children(block):
     children = []
     for line in block.split('\n'):
         heading_num = len(line.split(' ')[0])
-        node_children = text_to_children(line[heading_num:])
+        node_children = text_to_children(line[heading_num+1:])
         if node_children:
             html_node = ParentNode(tag=f"h{heading_num}",children=node_children)
             children.append(html_node)
@@ -95,7 +96,7 @@ def block_heading_to_html_children(block):
 def block_quote_to_html_children(block):
     children = []
     for line in block.split('\n'):
-        node_children = text_to_children(line[1:])
+        node_children = text_to_children(line[2:])
         if node_children:
             html_node = ParentNode(tag="blockquote",children=node_children)
             children.append(html_node)
@@ -115,7 +116,7 @@ def block_code_to_html_children(block):
 def block_ul_to_html_children(block):
     children = []
     for line in block.split('\n'):
-        node_children = text_to_children(line[1:])
+        node_children = text_to_children(line[2:])
         if node_children:
             html_node = ParentNode(tag="li",children=node_children)
             children.append(html_node)

@@ -1,5 +1,5 @@
 import unittest
-from markdown_blocks import markdown_to_blocks,block_to_block_type
+from markdown_blocks import markdown_to_blocks,block_to_block_type,markdown_to_html_node
 
 class TestMarkdownToBlocks(unittest.TestCase):
     def test_1(self):
@@ -146,7 +146,7 @@ class TestMarkdownToHtmlNode(unittest.TestCase):
         self.assertEqual(expected_html, actual_html)
 
     def test_combined_markdown(self):
-        markdown = '''### This is a heading\n> This is a quote\n```\nprint('code')\n```\n* list item 1\n1. ordered item 1\nthis is a paragraph'''
+        markdown = '''### This is a heading\n\n> This is a quote\n\n```\nprint('code')\n```\n\n* list item 1\n\n1. ordered item 1\n\nthis is a paragraph'''
         expected_html = '<div><h3>This is a heading</h3><blockquote>This is a quote</blockquote><pre><code>print(\'code\')</code></pre><ul><li>list item 1</li></ul><ol><li>ordered item 1</li></ol><p>this is a paragraph</p></div>'
         html_node = markdown_to_html_node(markdown)
         actual_html = html_node.to_html()

@@ -14,7 +14,8 @@ from markdown_to_textnode import (
     extract_markdown_links,
     split_nodes_image,
     split_nodes_link,
-    text_to_textnodes
+    text_to_textnodes,
+    extract_title
 )
 
 class TestSplitNodesDelimiter(unittest.TestCase):
@@ -364,3 +365,15 @@ class TestTextToTextNodes(unittest.TestCase):
         ]
         actual = text_to_textnodes(text)
         self.assertEqual(expected, actual)
+
+class TestExtractTitle(unittest.TestCase):
+    def test_title(self):
+        text = "# This is a title"
+        expected = "This is a title"
+        actual = extract_title(text)
+        self.assertEqual(expected, actual)
+
+    def test_no_title(self):
+        text = "This is not a title"
+        with self.assertRaises(ValueError):
+            extract_title(text)

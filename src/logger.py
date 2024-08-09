@@ -23,7 +23,7 @@ def setup_logging():
             'aligned': {
                 'format': (
                     '%(asctime)s %(levelname)-6s '
-                    'mod:%(module)-15s func:%(funcName)-20s line:%(lineno)-5d %(message)s'
+                    'mod:%(module)-15s %(lineno)s:%(funcName)-20s %(message)s'
                 )
             }
         },
