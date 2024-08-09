@@ -93,3 +93,61 @@ class TestBlockToBlockType(unittest.TestCase):
         expected = 'paragraph'
         actual = block_to_block_type(block)
         self.assertEqual(expected, actual)
+
+class TestMarkdownToHtmlNode(unittest.TestCase):
+
+    def test_heading(self):
+        markdown = '''### This is a heading'''
+        expected_html = '<div><h3>This is a heading</h3></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_multiple_headings(self):
+        markdown = '''### This is a heading\n#### this is another heading\n# one more heading'''
+        expected_html = '<div><h3>This is a heading</h3><h4>this is another heading</h4><h1>one more heading</h1></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_block_quote(self):
+        markdown = '''> This is a quote\n> this is another quote\n> one more quote'''
+        expected_html = '<div><blockquote>This is a quote</blockquote><blockquote>this is another quote</blockquote><blockquote>one more quote</blockquote></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_code_block(self):
+        markdown = '''```print('howdy')\nprint('partner')```'''
+        expected_html = '<div><pre><code>print(\'howdy\')</code><code>print(\'partner\')</code></pre></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_unordered_list(self):
+        markdown = '''* this is a\n* unordered list\n* do you like it?'''
+        expected_html = '<div><ul><li>this is a</li><li>unordered list</li><li>do you like it?</li></ul></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_ordered_list(self):
+        markdown = '''1. this is a\n2. ordered list\n3. do you like it?'''
+        expected_html = '<div><ol><li>this is a</li><li>ordered list</li><li>do you like it?</li></ol></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_paragraph(self):
+        markdown = '''this is a\nparagraph\ndo you like it?'''
+        expected_html = '<div><p>this is a<br>paragraph<br>do you like it?</p></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
+
+    def test_combined_markdown(self):
+        markdown = '''### This is a heading\n> This is a quote\n```\nprint('code')\n```\n* list item 1\n1. ordered item 1\nthis is a paragraph'''
+        expected_html = '<div><h3>This is a heading</h3><blockquote>This is a quote</blockquote><pre><code>print(\'code\')</code></pre><ul><li>list item 1</li></ul><ol><li>ordered item 1</li></ol><p>this is a paragraph</p></div>'
+        html_node = markdown_to_html_node(markdown)
+        actual_html = html_node.to_html()
+        self.assertEqual(expected_html, actual_html)
