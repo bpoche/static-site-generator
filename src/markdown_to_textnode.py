@@ -102,9 +102,3 @@ def text_to_textnodes(text: str) -> list[TextNode]:
     nodes = split_nodes_image(old_nodes=nodes.copy())
     nodes = split_nodes_link(old_nodes=nodes.copy())
     return nodes
-
-print(extract_title('''
-                    # Tester Title
-                    # 
-# Here I am ''' 
-))

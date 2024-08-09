@@ -31,7 +31,7 @@ def setup_logging():
             'console': {
                 'class': 'logging.StreamHandler',
                 'formatter': 'aligned',
-                'level': logging.INFO
+                'level': logging.DEBUG
             },
             'file': {
                 'class': 'logging.handlers.RotatingFileHandler',
