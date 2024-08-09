@@ -1,5 +1,6 @@
 __pycache__/
 public/
+public_test/
 
 # Ignore log files in all subdirectories
 *.log
